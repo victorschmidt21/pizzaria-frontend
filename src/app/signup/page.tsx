@@ -1,51 +1,45 @@
-import { api } from "@/services/api";
-import styles from "./page.module.scss";
 import Link from "next/link";
+import styles from "../page.module.scss";
+import { api } from "@/services/api";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
-export default function Home() {
-  async function handleLogin(formData: FormData) {
+export default function Signup() {
+  async function HandleRegister(formData: FormData) {
     "use server";
+    const name = formData.get("name");
     const email = formData.get("email");
     const password = formData.get("password");
 
-    if (email === "" || password === "") {
+    if (name === "" || email === "" || password === "") {
       console.log("Preencha todos os campos!");
       return;
     }
-
     try {
-      const response = await api.post("/user/login", {
+      await api.post("/user", {
+        name,
         email,
         password,
       });
-
-      if (!response.data.token) {
-        return;
-      }
-
-      const expressTime = 60 * 60 * 24 * 30 * 1000;
-
-      (await cookies()).set("login", response.data.token, {
-        maxAge: expressTime,
-        path: "/",
-        httpOnly: false,
-        secure: process.env.NODE_ENV === "production",
-      });
     } catch (err) {
       console.log(err);
-      return;
+      return
     }
-    redirect("/dashboard");
+    redirect("/");
   }
   return (
-    <div className={styles.main}>
+    <main className={styles.main}>
       <div>
         <h1 className={styles.logo}>Logo</h1>
       </div>
+      <h1>Criando sua conta</h1>
       <section className={styles.login}>
-        <form action={handleLogin}>
+        <form action={HandleRegister}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Digite o seu nome"
+            className={styles.input}
+          />
           <input
             type="email"
             name="email"
@@ -58,12 +52,12 @@ export default function Home() {
             placeholder="Digite sua senha"
             className={styles.input}
           />
-          <button type="submit">Fazer login</button>
+          <button type="submit">Cadastrar-se</button>
         </form>
       </section>
       <Link href={"/signup"} className={styles.text}>
-        Não possui uma conta? Cadastre-se
+        Já possui uma conta? Faça login
       </Link>
-    </div>
+    </main>
   );
 }
