@@ -10,6 +10,10 @@ export default function Signup() {
     const email = formData.get("email");
     const password = formData.get("password");
 
+    if (name === "" || email === "" || password === "") {
+      console.log("Preencha todos os campos!");
+      return;
+    }
     try {
       await api.post("/user", {
         name,
@@ -18,6 +22,7 @@ export default function Signup() {
       });
     } catch (err) {
       console.log(err);
+      return
     }
     redirect("/");
   }
