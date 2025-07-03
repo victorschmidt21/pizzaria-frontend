@@ -1,0 +1,55 @@
+.container{
+    max-width: 720px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+    
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.containerTitle{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    h1{
+        color: var(--white);
+    }
+    button{
+        background: transparent;
+        border: 0;
+        color: var(--green-900);
+    }
+
+}
+
+.containerListOrder{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cardOrder{
+    display: flex;
+    background-color: var(--dark-900);
+    align-items: center;
+    border: 0;
+    font-size: 1rem;
+    border-radius: 8px;
+    color: var(--white);
+    gap: 1rem;
+    transition: all 0.5s;
+
+    &:hover{
+        filter: brightness(1.2);
+    }
+
+    div{
+        background-color: var(--green-900);
+        width: 1rem;
+        height: 3rem;
+        border-radius: 8px 0 0 8px;
+    }
+}

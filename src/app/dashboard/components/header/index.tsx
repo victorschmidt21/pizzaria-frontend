@@ -1,14 +1,18 @@
+"use client";
 import Image from "next/image";
 import logoImg from "/public/logo.png";
 import Link from "next/link";
 import { LogOut } from "lucide-react";
-import style from "./style.module.scss"
+import style from "./style.module.scss";
+import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 export default function Header() {
+    const router = useRouter();
 
-    async function handleLogout() {
-        "use server"
-
-    }
+  function handleLogout() {
+    deleteCookie("login", { path: "/" });
+    router.replace("/")
+  }
   return (
     <header className={style.header}>
       <Image
